@@ -1,0 +1,13 @@
+{+foo/}
+{#foo}{foo}{/foo}
+{>"foo"/}
+
+{$example/}
+{$example foo="foo"/}
+{$example "templates/components/example" foo="foo"/}
+
+{$example "templates/components/example" foo="foo"}
+  <em>{bar}</em>
+{:bazBody}
+  <strong>{baz}</strong>
+{/example}
