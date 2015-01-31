@@ -11,13 +11,16 @@ var paths = {};
 var sources = {};
 var asts = {};
 var compiled = {};
-var context = { outer: 'this should not print' };
+var context = {
+  outer: 'this should NOT print',
+  passed: 'this SHOULD print'
+};
 
 paths = {
   'include': path.join(dir, 'include.dust'),
   'components/example': path.join(dir, 'components', 'example.dust')
 }
-console.log(paths);
+// console.log(paths);
 
 for (var t in paths) {
   var path = paths[t];
@@ -29,7 +32,7 @@ for (var t in paths) {
   // console.log(asts[t]);
 
   compiled[t] = compile(sources[t], t);
-  console.log(compiled[t]);
+  // console.log(compiled[t]);
 
   dust.loadSource(compiled[t]);
 }

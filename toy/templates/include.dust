@@ -1,9 +1,9 @@
-<p>{outer}</p>
+<p>{passed}</p>
 
-{$include "components/example":. /}
+{! {$include "components/example":. /} !}
 
 {! Strong encapsulation !}
-{$include "components/example" /}
+{! {$include "components/example" /}
 
 {$include "components/example" isFeatured="true" /}
 
@@ -13,4 +13,14 @@
   <p><em>Yay!</em></p>
 {:other}
   <p><strong>Boom!</strong></p>
+{/include} !}
+
+{!
+  Broken: {passed} should resolve using out scope, but partial content should
+  not receive outer context by default.
+!}
+{$include "components/example" isFeatured="true"}
+  <p><em>Yay!</em></p>
+{:other}
+  <p><strong>{passed}</strong></p>
 {/include}
