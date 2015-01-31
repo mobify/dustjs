@@ -76,63 +76,17 @@ partial "partial"
   { var key = (s ===">")? "partial" : s; return [key, n, c, p].concat([['line', line], ['col', column]]) }
 
 /*
-  component is defined as
+  include is defined as matching inc_tag_start followed by 0 or more
+  white spaces plus a closing brace, plus body, plus bodies plus end_tag.
+
+  alternatively defined as matching inc_tag_start followed by a slash and
+  closing brace.
 */
-
-/*
-section "section"
-  = t:sec_tag_start ws* rd b:body e:bodies n:end_tag? &{if( (!n) || (t[1].text !== n.text) ) { throw new Error("Expected end tag for "+t[1].text+" but it was not found. At line : "+line+", column : " + column)} return true;}
-    { e.push(["param", ["literal", "block"], b]); t.push(e); return t.concat([['line', line], ['col', column]]) }
-  / t:sec_tag_start ws* "/" rd
-  { t.push(["bodies"]); return t.concat([['line', line], ['col', column]]) }
-*/
-
-/*
-component "component"
-  = t:comp_tag_start ws* rd b:body e:bodies n:end_tag? &{if( (!n) || (t[1].text !== n.text) ) { throw new Error("Expected end tag for "+t[1].text+" but it was not found. At line : "+line+", column : " + column)} return true;}
-    { e.push(["param", ["literal", "block"], b]); t.push(e); return t.concat([['line', line], ['col', column]]) }
-  / t:comp_tag_start ws* "/" rd
-  { t.push(["bodies"]); return t.concat([['line', line], ['col', column]]) }
-
-comp_tag_start
-  = ld t:("$") n:identifier f:(ws+ i:inline {return i})? p:params
-  { return [t, n, f, p] }
-*/
-
-/*
-include "include"
-  = ld t:("$include") ws* n:(k:key {return ["literal", k]} / inline) c:context p:params ws* rd
-    b:body
-    e:bodies
-    n:end_tag?
-
-    &{if ((!n) || (t[0].text.replace('$', '') !== n.text)) {throw new Error("Expected end tag for "+t[0].text+" but it was not found. At line : "+line+", column : " + column)} return true;}
-
-  / ld t:("$include") ws* n:(k:key {return ["literal", k]} / inline) c:context p:params ws* "/" rd
-
-  {
-    if (!c[1]) {c.push(["path", true, [], ['line', line], ['col', column]])};
-    e.push(["param", ["literal", "block"], b]);
-    p.push(e);
-    return ["partial", n, c, p];
-  }
-*/
-
 include "include"
   = t:inc_tag_start ws* rd b:body e:bodies z:end_tag? &{ if ((!z) || (t[0] !== z.text)) {throw new Error("Expected end tag for "+t[0]+" but it was not found. At line : "+line+", column : " + column)} return true; }
     {
-      // var params = t[3];
-      // var bodies;
-
       t[0] = "include";
-
       e.push(["param", ["literal", "block"], b]);
-      // e = e.slice(1);
-      // bodies = e.map(function(body) { return body; });
-      // params.push(["param", ["literal", "bodies"], bodies]);
-
-      // t[3] = params;
-
       t.push(e);
       return t.concat([['line', line], ['col', column]])
     }
@@ -140,34 +94,19 @@ include "include"
   / t:inc_tag_start ws* "/" rd
     { t.push(["bodies"]); return t.concat([['line', line], ['col', column]]) }
 
+/*
+   inc_tag_start is defined as matching an opening brace followed by '$include'
+   plus a key or inline plus context, plus params.
+
+   context is empty by default (keys from the outer context can be passed in
+   params).
+*/
 inc_tag_start
   = ld t:("$include") ws* n:(k:key {return ["literal", k]} / inline) c:context p:params
     {
       if (c.length < 2) {c.push(["literal", {}]); c.concat([['line', line], ['col', column]])};
       return ["include", n, c, p]
     }
-
-/*
-[
-  "partial",
-  ["literal", "icon"],
-  [
-    "context",
-    ["path", true, ["name"], ["line", 4], ["col", 12]]
-  ],
-  [
-    "params",
-    [
-      "param",
-      ["literal", "name"],
-      ["literal", "foo", ["line", 4], ["col", 23]]
-    ]
-  ],
-  ["line", 4],
-  ["col", 5]
-]
-*/
-
 
 /*
    filters is defined as matching a pipe character followed by anything that matches the key
