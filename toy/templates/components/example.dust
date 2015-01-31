@@ -1,0 +1,5 @@
+<div class="c-example {?isFeatured}c--featured{/isFeatured}">
+  {block}
+  {other}
+  {?outer}<p>{outer}</p>{/outer}
+</div>

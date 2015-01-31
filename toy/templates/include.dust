@@ -1,0 +1,16 @@
+<p>{outer}</p>
+
+{$include "components/example":. /}
+
+{! Strong encapsulation !}
+{$include "components/example" /}
+
+{$include "components/example" isFeatured="true" /}
+
+{$include "components/example"}{/include}
+
+{$include "components/example" isFeatured="true"}
+  <p><em>Yay!</em></p>
+{:other}
+  <p><strong>Boom!</strong></p>
+{/include}

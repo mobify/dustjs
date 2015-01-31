@@ -47,3 +47,15 @@
 {:bazBody}
   <strong>{baz}</strong>
 {/list-tile}
+
+{!
+  Autoload and compile component-name.dust as a partial from a configurable
+  directory (possibly with recursive search). Explicit pathing could be done
+  like this: {$component-name "some/dir/component-name" foo="foo" /}
+!}
+{$component-name foo="foo"}
+  <em>{bar}</em> {! ← {body} inside list-tile.dust !}
+{:baz}
+  {$other-component bar=someContext.quux /} {! ← {body.baz} inside list-tile.dust !}
+{/component-name}
+
