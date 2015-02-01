@@ -12,11 +12,11 @@ var sources = {};
 var asts = {};
 var compiled = {};
 var context = {
-  outer: 'outer',
-  passed: 'passed',
+  outer: 'Outer',
+  passed: 'Passed!',
   example: 'example',
   state: {
-    weak: true
+    faved: true
   }
 };
 
@@ -36,7 +36,7 @@ for (var t in paths) {
   // console.log(asts[t]);
 
   compiled[t] = compile(sources[t], t);
-  console.log(compiled[t]);
+  // console.log(compiled[t]);
 
   dust.loadSource(compiled[t]);
 }
