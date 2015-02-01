@@ -36,7 +36,7 @@ for (var t in paths) {
   // console.log(asts[t]);
 
   compiled[t] = compile(sources[t], t);
-  // console.log(compiled[t]);
+  console.log(compiled[t]);
 
   dust.loadSource(compiled[t]);
 }
