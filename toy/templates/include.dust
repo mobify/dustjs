@@ -1,25 +1,32 @@
-<p>{passed}</p>
+<p>{passed}</p> {~n}{~n}
 
-{! {$include "components/example":. /} !}
+{! Explict context passing !}
+{$include "components/example":. /} {~n}{~n}
+{$include "components/{example}":. /} {~n}{~n}
 
 {! Strong encapsulation !}
-{! {$include "components/example" /}
+{$include "components/example" /} {~n}{~n}
 
-{$include "components/example" isFeatured="true" /}
+{$include "components/example" isFeatured="true" /} {~n}{~n}
 
-{$include "components/example"}{/include}
+{! With bodies !}
+{$include "components/example"}{/include} {~n}{~n}
 
 {$include "components/example" isFeatured="true"}
   <p><em>Yay!</em></p>
 {:other}
   <p><strong>Boom!</strong></p>
-{/include} !}
+{/include}
+{~n}{~n}
 
-{!
-  Broken: {passed} should resolve using out scope, but partial content should
-  not receive outer context by default.
-!}
 {$include "components/example" isFeatured="true"}
+  <p><em>Yay!</em></p>
+{:other}
+  <p><strong>{passed}</strong></p>
+{/include}
+{~n}{~n}
+
+{$include "components/example" isFeatured=state.featured isWeak=state.weak}
   <p><em>Yay!</em></p>
 {:other}
   <p><strong>{passed}</strong></p>

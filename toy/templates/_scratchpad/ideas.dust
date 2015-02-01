@@ -1,0 +1,13 @@
+{!
+{@class key="example" add="c-example" /}
+{@class key="example" add="c--featured" if=isFeatured or="isStrong" /}
+{@class key="example" add="c--is-read" if=isRead /}
+<div class="{class.example}"></div>
+!}
+
+{! {$include "components/list" class="c--compact"}
+  {#items:items}
+    {>"components/list-tile"/}
+    {>icon:. name="foo"/}
+  {/items}
+{/include} !}

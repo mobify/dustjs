@@ -1,5 +1,7 @@
-<div class="c-example {?isFeatured}c--featured{/isFeatured}">
+<div class="c-example{?isFeatured} c--featured{/isFeatured}{?isWeak} c--weak{/isWeak}">
   {block}
   {other}
+
+  {! This should only print when the outer context is explicitly passed in. !}
   {?outer}<p>{outer}</p>{/outer}
 </div>

@@ -12,8 +12,12 @@ var sources = {};
 var asts = {};
 var compiled = {};
 var context = {
-  outer: 'this should NOT print',
-  passed: 'this SHOULD print'
+  outer: 'outer',
+  passed: 'passed',
+  example: 'example',
+  state: {
+    weak: true
+  }
 };
 
 paths = {

@@ -1,6 +1,0 @@
-{! {$include "components/list" class="c--compact"}
-  {#items:items}
-    {>"components/list-tile"/}
-    {>icon:. name="foo"/}
-  {/items}
-{/include} !}

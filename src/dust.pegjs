@@ -97,14 +97,10 @@ include "include"
 /*
    inc_tag_start is defined as matching an opening brace followed by '$include'
    plus a key or inline plus context, plus params.
-
-   context is empty by default (keys from the outer context can be passed in
-   params).
 */
 inc_tag_start
   = ld t:("$include") ws* n:(k:key {return ["literal", k]} / inline) c:context p:params
     {
-      // if (c.length < 2) {c.push(["literal", {}]); c.concat([['line', line], ['col', column]])};
       return ["include", n, c, p]
     }
 
