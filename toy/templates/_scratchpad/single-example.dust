@@ -1,6 +1,0 @@
-{$list "components/list" class="c--compact"}
-  {#items:items}
-    {>"components/list-tile"/}
-    {>icon:. name="foo"/}
-  {/items}
-{/list}
