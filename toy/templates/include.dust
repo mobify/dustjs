@@ -1,0 +1,134 @@
+1. Testing value accessed from the current context. {~n}
+
+<p>{passed}</p>
+
+{~n}
+expected: {~n}
+{`<p>Passed!</p>`}
+{~n}{~n}
+
+====== {~n}{~n}
+
+2. Strong encapsulation by default. {~n}
+
+{$include "components/example" /}
+
+{~n}
+expected: {~n}
+{`<div class="c-example"></div>`}
+{~n}{~n}
+
+====== {~n}{~n}
+
+3. Passing literal params. {~n}
+
+{$include "components/example" isFeatured="true" /}
+
+{~n}
+expected: {~n}
+{`<div class="c-example c--featured"></div>`}
+{~n}{~n}
+
+====== {~n}{~n}
+
+4. Passing objects from the current context in params. {~n}
+
+{$include "components/example" state=state /}
+
+{~n}
+expected: {~n}
+{`<div class="c-example"><p>Faved!</p></div>`}
+{~n}{~n}
+
+====== {~n}{~n}
+
+5. Empty body. {~n}
+
+{$include "components/example"}{/include}
+
+{~n}
+expected: {~n}
+{`<div class="c-example"></div>`}
+{~n}{~n}
+
+====== {~n}{~n}
+
+5. Body content {~n}
+
+{$include "components/example"}
+  <p><em>Yay!</em></p>
+{/include}
+
+{~n}
+expected: {~n}
+{`<div class="c-example"><p><em>Yay!</em></p></div>`}
+{~n}{~n}
+
+====== {~n}{~n}
+
+6. Multiple bodies {~n}
+
+{$include "components/example"}
+  <p><em>Yay!</em></p>
+{:other}
+  <p><strong>Boom!</strong></p>
+{/include}
+
+{~n}
+expected: {~n}
+{`<div class="c-example"><p><em>Yay!</em></p><p><strong>Boom!</strong></p></div>`}
+{~n}{~n}
+
+====== {~n}{~n}
+
+7. Interpolating values from current context into bodies {~n}
+
+{$include "components/example"}
+  <p><em>{passed}</em></p>
+{:other}
+  <p><strong>{?state.faved}Faved!{/state.faved}</strong></p>
+{/include}
+
+{~n}
+expected: {~n}
+{`<div class="c-example"><p><em>Passed!</em></p><p><strong>Faved!</strong></p></div>`}
+{~n}{~n}
+
+====== {~n}{~n}
+
+8. Everything bagel {~n}
+
+{$include "components/example" isFeatured="true" state=state}
+  <p><em>{passed}</em></p>
+{:other}
+  <p>Template name is <strong>{example}</strong></p>
+{/include}
+
+{~n}
+expected: {~n}
+{`<div class="c-example c--featured"><p><em>Passed!</em></p><p>Template name is <strong>example</strong></p><p>Faved!</p></div>`}
+{~n}{~n}
+
+======= {~n}{~n}
+
+The following allows context to be inherited more like the default Dust {~n}
+behaviour. This isn’t encouraged but it should be possible. {~n}
+
+9. Explicitly set the include’s context to the current context. {~n}
+
+{$include "components/example":. /}
+
+{~n}
+expected: {~n}
+<div class="c-example"><p>Outer</p><p>Faved!</p></div>
+{~n}{~n}
+
+====== {~n}{~n}
+
+10. Explict context passing with dynamic template. {~n}
+
+{$include "components/example":. /}
+
+{~n}
+expected: {~n}
+<div class="c-example"><p>Outer</p><p>Faved!</p></div>

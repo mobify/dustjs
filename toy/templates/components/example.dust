@@ -1,0 +1,10 @@
+<div class="c-example{?isFeatured} c--featured{/isFeatured}">
+  {bodies.block}
+  {bodies.other}
+
+  {! This should only print when the outer context is explicitly passed in. !}
+  {?outer}<p>{outer}</p>{/outer}
+
+  {! Only present when explicitly passed in !}
+  {?state.faved}<p>Faved!</p>{/state.faved}
+</div>
